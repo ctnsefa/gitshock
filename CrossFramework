@@ -1,0 +1,26 @@
+Cross Framework
+Cross Framework
+godoc gh-action
+Cross is a framework that enables distributed transactions over multiple blockchains. It is implemented as Cosmos module.
+
+Cross provides several key features:
+
+Cross-chain transaction support - supports Atomic Commit Protocol beteen multiple blockchains.
+General application support - provides a framework to enable the support of "general" application as smart contract ("general" application means Account model like Ethereum, not UTXO model). Using this framework, smart contract developers are not forced to implement Atomic Commit and locking protocol at each contract development.
+Use IBC as messaging layer - realize trustless communications between multiple chains.
+Documents
+Please see here.
+
+Related Projects
+Library
+https://github.com/datachainlab/cross-solidity: A solidity implementation for Ethereum and EVM chains
+https://github.com/datachainlab/cross-cdt: A store that supports efficient concurrent operations
+https://github.com/hyperledger-labs/yui-docs: YUI enables interoperability between multiple heterogeneous ledgers
+Demo
+https://github.com/datachainlab/fabric-tendermint-cross-demo: An E2E demo project using Cross between Hyperledger Fabric and Tendermint.
+Motivation
+It is difficult to atomically execute general smart contract on multiple networks. One such example is Train-And-Hotel problem. If we can convert Train and Hotel reservation rights into NFT that can be moved to any chain using Two-way peg method such as ics-020, it may be possible to solve this problem simply by doing atomicswap on a single chain. However, if each Token's metadata (e.g. a whitelist of owner) depends on other states of its origin chain and common state is referenced by other contract states, it is difficult to move between chains.
+
+To solve such problem, we need to be able to execute All or Nothing reservation contracts that exist in two different chains, rather than pegging to single blockchain. This is similar to Atomic commit protocol for distributed systems. To achieve this, each contract's state machine needs to lock the state required for "commit" at "prepare" phase. But it is not safe to enforce these requirements on each contract developers. Therefore, we decided to implement Atomic commit protocol in compliance with ics-004 and create a datastore that transparently meets the required locking protocol.
+
+Maintainers
